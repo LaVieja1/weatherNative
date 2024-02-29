@@ -1,11 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
+import * as Location from 'expo-location'
 
 import Tabs from './src/components/Tabs'
 
 const App = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [location, setLocation] = useState(null)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    ;(async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+
+      if (status !== 'granted') {
+        setError('Permiso para acceder a la ubicación denegado')
+        return
+      }
+
+      let location = await Location.getCurrentPositionAsync({})
+      setLocation(location)
+    })()
+  }, [])
+
+  if (location) {
+    console.log(location)
+  }
 
   if (loading) {
     return (

@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons'
 
@@ -44,7 +43,6 @@ const Tabs = ({ weather }) => {
       </Tab.Screen>
       <Tab.Screen
         name={'Próximo'}
-        component={UpcomingWeather}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -54,7 +52,9 @@ const Tabs = ({ weather }) => {
             />
           )
         }}
-      />
+      >
+        {() => <UpcomingWeather weatherData={weather.list} />}
+      </Tab.Screen>
       <Tab.Screen
         name={'Ciudad'}
         component={City}

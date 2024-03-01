@@ -8,20 +8,19 @@ import Tabs from './src/components/Tabs'
 
 const App = () => {
   const [loading, error, weather] = useGetWeather()
-  console.log(loading, error, weather)
 
-  if (loading) {
+  if (weather && weather.list) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size={'large'} color={'blue'} />
-      </View>
+      <NavigationContainer>
+        <Tabs weather={weather} />
+      </NavigationContainer>
     )
   }
 
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+    <View style={styles.container}>
+      <ActivityIndicator size={'large'} color={'blue'} />
+    </View>
   )
 }
 
